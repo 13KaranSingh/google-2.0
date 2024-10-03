@@ -2,8 +2,9 @@ import React from "react";
 
 export const Navbar = () => {
   return (
-    <div className="p-5 p-b-0 flex flex-wrap">
+    <div className="text-red-500">
       <h1>Navbar</h1>
     </div>
   );
 };
+
