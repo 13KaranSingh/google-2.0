@@ -1,13 +1,25 @@
-// this will be a simple functional component
-//rafce creates a react arrow function with a normal export
-import React from 'react'
+import React, { useState } from 'react';
+
+import { Footer } from './components/Footer';
+import { Navbar } from './components/Navbar';
+import { Routes } from './components/Routes';
 
 const App = () => {
-  return (
-    <div>
-      <h1 className="text-4xl font-bold text-blue-600">App</h1>
-    </div>
-  )
-}
+  const [darkTheme, setDarkTheme] = useState(false);
 
-export default App
+  return (
+    <div className={darkTheme ? 'dark' : ''}>
+      <div className="dark:bg-gray-900 bg-gray-100 dark:text-gray-200 black min-h-screen">
+        <Navbar setDarkTheme={setDarkTheme} darkTheme={darkTheme} />
+        <Routes />
+        <Footer />
+      </div>
+    </div>
+
+  );
+};
+
+export default App;
+
+
+
