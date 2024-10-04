@@ -8,11 +8,22 @@ export const ResultsContextProvider = ({ children }) => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [lastRequestTime, setLastRequestTime] = useState(0); // State for last request time
 
-
+  const requestLimit = 2000; // 2 seconds throttle limit
 
   const getResults = async (query) => {
-    setIsLoading(true); // Assuming you're using this for the loading state
+    const now = Date.now();
+
+    // Check if enough time has passed since the last request
+    if (now - lastRequestTime < requestLimit) {
+      console.log("Request throttled. Please wait.");
+      return; // Exit if the request is throttled
+    }
+
+    setLastRequestTime(now); // Update the last request time
+
+    setIsLoading(true); // Set loading state to true
     const url = `${baseUrl}?q=${encodeURIComponent(query)}`; // Constructing the URL with the query
 
     try {
@@ -23,21 +34,17 @@ export const ResultsContextProvider = ({ children }) => {
         },
       });
 
-      // Check if the response is ok (status code in the range 200-299)
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      // Parse the JSON data from the response
       const data = await response.json();
-
-      // Set the results state with the fetched data
-      setResults(data); // Adjust this based on the structure of the data returned from your API
+      console.log(data); // Log the fetched data to check its structure
+      setResults(data); // Set results state with fetched data
     } catch (error) {
       console.error("Error fetching the results:", error);
-      // Optionally, you can set an error state here to display an error message in the UI
     } finally {
-      setIsLoading(false); // Always set loading to false after fetching
+      setIsLoading(false); // Set loading state to false after fetching
     }
   };
 

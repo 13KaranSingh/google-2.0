@@ -5,19 +5,18 @@ import { useResultsContext } from "../contexts/ResultContextProvider";
 
 export const Results = () => {
   const { results, isLoading, getResults } = useResultsContext();
-  const location = useLocation(); // This gives you the URL: images/news/videos/etc.
+  const location = useLocation();
 
   useEffect(() => {
-    const testSearchTerm = 'React Tutorial'; // Hard-coded search term for testing
-  
+    const testSearchTerm = "React Tutorial"; // Use a real search term
     if (testSearchTerm) {
-      if (location.pathname === '/videos') {
-        getResults(`${testSearchTerm} videos`); // Use the test search term
+      if (location.pathname === "/videos") {
+        getResults(`${testSearchTerm} videos`);
       } else {
-        getResults(testSearchTerm); // For other paths, just use the search term
+        getResults(testSearchTerm);
       }
     }
-  }, []); // Added dependencies for proper reactivity
+  }, [location.pathname]); // Make sure to include dependencies if necessary
 
   if (isLoading) return <Loading />;
 
@@ -25,7 +24,7 @@ export const Results = () => {
     case "/search":
       return (
         <div className="flex flex-wrap justify-between space-y-6 sm:px-56">
-          {results?.results?.map(({ link, title }, index) => (
+          {results?.organic_results?.map(({ link, title }, index) => (
             <div key={index} className="md:w-2/5 w-full">
               <a href={link} target="_blank" rel="noreferrer">
                 <p className="text-sm">
