@@ -4,13 +4,20 @@ import { Loading } from "../components/Loading";
 import { useResultsContext } from "../contexts/ResultContextProvider";
 
 export const Results = () => {
-  const { results, isLoading, searchTerm, setSearchTerm, getResults } =
-    useResultsContext();
-  const location = useLocation(); // This gives you the URL: images/news/videos,etc
+  const { results, isLoading, getResults } = useResultsContext();
+  const location = useLocation(); // This gives you the URL: images/news/videos/etc.
 
   useEffect(() => {
-    getResults('/search/q=Nike&num=20'); // Hardcoded search term
-  }, []);
+    const testSearchTerm = 'React Tutorial'; // Hard-coded search term for testing
+  
+    if (testSearchTerm) {
+      if (location.pathname === '/videos') {
+        getResults(`${testSearchTerm} videos`); // Use the test search term
+      } else {
+        getResults(testSearchTerm); // For other paths, just use the search term
+      }
+    }
+  }, []); // Added dependencies for proper reactivity
 
   if (isLoading) return <Loading />;
 
@@ -38,7 +45,6 @@ export const Results = () => {
       return <div>News search results will be displayed here.</div>;
     case "/videos":
       return <div>Video search results will be displayed here.</div>;
-
     default:
       return <div>Error! Page not found.</div>;
   }
