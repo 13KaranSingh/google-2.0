@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { Results } from './Results';
+import { Loading } from './Loading';
 
 /**
  * The AppRoutes component is responsible for defining the routes for the application.
