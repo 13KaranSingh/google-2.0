@@ -21,9 +21,6 @@ app.get('/search', async (req, res) => {
     const query = req.query.q;
     const apiKey = process.env.SERPAPI_KEY;
 
-    // Temporary log for debugging
-    console.log('Using API key:', apiKey);
-
     try {
         const response = await fetch(`https://serpapi.com/search?q=${encodeURIComponent(query)}&api_key=${apiKey}`);
         const data = await response.json();
@@ -35,11 +32,10 @@ app.get('/search', async (req, res) => {
     }
 });
 
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-
 
 
 

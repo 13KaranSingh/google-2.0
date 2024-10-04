@@ -9,7 +9,7 @@ export const Results = () => {
   const location = useLocation(); // This gives you the URL: images/news/videos,etc
 
   useEffect(() => {
-    getResults('/search/q=Nike'); // Hardcoded search term
+    getResults('/search/q=Nike&num=20'); // Hardcoded search term
   }, []);
 
   if (isLoading) return <Loading />;
